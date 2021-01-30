@@ -3,11 +3,17 @@ import math
 
 def calc(a,b,c):
     if a or b or c != int:
-        a = int(a)
-        b = int(b)
-        c = int(c)
+        try:
+            a = int(a)
+            b = int(b)
+            c = int(c)
+        except ValueError:
+            global ValueError2
+            ValueError2 = True
+            return ValueError2
     if a or b or c == int:
         try:
+
             #step 1 is multiplying a and c just like in the quadratic equation 
             step1 = (a * c)
             #step 2 is multiplying b to the power of 2
@@ -44,8 +50,6 @@ def calc(a,b,c):
     else:  
         return
 
-
-
 app = Flask(__name__)
 
 @app.route('/', methods=["GET","POST"])
@@ -58,7 +62,10 @@ def home():
         answer = calc(a,b,c)
         if answer == None:
             return f'<p class="font-monospace" style= "font-size:50;">Error you must input digits only!</p>'
-            '<p class="font-monospace"><input class="btn btn-primary" type="submit" value="Submit">Back home</p>'
+        
+        if ValueError2 == True:
+            return f'<p class="font-monospace" style= "font-size:50;">You need to enter 3 decimal numbers.</p>'
+            
         return redirect(url_for("answer" , cal = answer))
     else:
         return render_template('home.html')
