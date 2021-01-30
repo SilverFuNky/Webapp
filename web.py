@@ -66,7 +66,5 @@ def answer(cal):
     return f'<p class="font-monospace" style= "font-size:200;">{cal}</p>'
 
 
-
-
 if __name__ == '__main__':
     app.run(debug = True)
